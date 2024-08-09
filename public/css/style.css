@@ -1,0 +1,144 @@
+body {
+    background-color: #F3F4F6 !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.header-sec {
+    justify-content: end;
+}
+
+.header-sec ul {
+    grid-gap: 1rem;
+}
+
+.logo {
+    font-size: x-large !important;
+    font-weight: 100;
+}
+
+.navbar {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+    background-color: #ffffff !important;
+}
+
+.container {
+    padding: 20px;
+}
+.post-block {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sender{
+    grid-gap: 1rem;
+}
+
+.post-sec {
+    background-color: #fff;
+    grid-gap: 5px;
+    border-radius: 1rem;
+}
+
+.edit-sec {
+    grid-gap: 5px;
+}
+
+.date-time {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.form-container {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.form-control:focus {
+    border: 1px solid gray !important;
+    box-shadow: 0 0 0 0 rgb(4 8 14 / 25%) !important;
+}
+
+.form-container button {
+    background-color: #445567;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.form-container i {
+    cursor: pointer;
+}
+
+.form-container input[type=file] {
+    display: none;
+}
+
+.form-container label {
+    position: absolute;
+    bottom: 0;
+    margin-left: 1rem;
+    margin-bottom: 5px;
+    /*right: 0;*/
+    /*top: 0;*/
+}
+
+.form-container a {
+    background-color: #445567;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.form-container .edit-buttons {
+    display: flex;
+    grid-gap: 5px;
+}
+
+.form {
+    justify-content: center;
+}
+
+.first-sec {
+    flex-direction: column;
+    align-items: center;
+    /*height: 100vh;*/
+    /*justify-content: space-between;*/
+}
+
+.first-sec div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.first-sec p {
+    color: gray;
+}
+
+.delete-but {
+    color: rgba(255, 0, 0, 0.4);
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.post-user-prof {
+    height: 2.5rem;
+    width: 2.5rem;
+}

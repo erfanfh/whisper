@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+    .x-small {
+        font-size: x-small;
+    }
+
+    .prof-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .username-box, .bio-box {
+        padding: 10px !important;
+    }
+}
