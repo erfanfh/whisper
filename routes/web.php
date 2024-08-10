@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\ContactController;
 
 
 Route::get('/', function () {
@@ -27,12 +27,11 @@ Route::resource('posts', PostController::class)
     ->except('create', 'index')
     ->middleware('auth');
 
-Route::get('profile', [AuthController::class, 'profile'])->name('profile')->middleware('auth');
 Route::put('profile', [AuthController::class, 'profilePost'])->name('profile.post')->middleware('auth');
+Route::delete('profile', [AuthController::class, 'profileDelete' ])->name('profile.delete')->middleware('auth');
 
 Route::get('/{username}', [ProfileController::class, 'show'])->name('profile.show');
 
-Route::get('/run-migrations', function () {
-    Artisan::call('migrate');
-    return 'Migrations have been run successfully!';
-});
+Route::post('/{username}/contact', [ContactController::class, 'store'])->name('contact.add')->middleware('auth');
+Route::put('/{username}/contact', [ContactController::class, 'update'])->name('contact.edit')->middleware('auth');
+Route::delete('/{username}/contact', [ContactController::class, 'destroy'])->name('contact.delete')->middleware('auth');

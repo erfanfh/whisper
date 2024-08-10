@@ -7,7 +7,7 @@ use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function show(Request $request, User $user)
+    public function show(Request $request)
     {
         User::where('username', $request->path())->firstOrFail();
 

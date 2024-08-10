@@ -31,7 +31,17 @@
                         <div style="grid-gap: 5px" class="d-flex">
                             <div class="d-flex align-items-center mb-10 sender">
                                 <a style="color: black" href="{{ route('profile.show', $post->user->username) }}">
-                                    <div class="fw-bold">{{ $post->user->username }}</div>
+                                    <div class="fw-bold">
+                                        @if(empty(auth()->user()->contacts->where('belongs_id', $post->user->id)->all()))
+                                            @if(auth()->user()->id == $post->user->id)
+                                                You
+                                            @else
+                                                {{ $post->user->username }}
+                                            @endif
+                                        @else
+                                            {{ auth()->user()->contacts->where('belongs_id', $post->user->id)->first()->name }}
+                                        @endif
+                                    </div>
                                 </a>
                                 <div style="color: #555" class="x-small date-time">{{ $post->created_at->format('j/m/Y, H:i') }}</div>
                                 @if($post->edited)

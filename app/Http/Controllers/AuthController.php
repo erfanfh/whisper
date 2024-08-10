@@ -112,20 +112,22 @@ class AuthController extends Controller
             auth()->user()->profile()->update([
                 'image' => Auth::user()->username . "." . $extension,
             ]);
-        }
 
-        if ($request->input('delete-profile') == "on") {
-            copy(public_path("Images/Profiles/") . "User-avatar.png", public_path("Images/Profiles/" . auth()->user()->profile->image));
-//            auth()->user()->profile()->update([
-//                'image' => auth()->user()->profile()->image,
-//            ]);
+            copy(storage_path("app/Profiles/") . auth()->user()->profile->image, public_path("Images/Profiles/" . auth()->user()->profile->image));
+
+            unlink(storage_path("app/Profiles/") . auth()->user()->profile->image);
         }
 
         if (auth()->user()->username != $request->input('username')) {
+
             rename(public_path('Images/Profiles/') . auth()->user()->username . '.png' , public_path('Images/Profiles/') . $request->input('username') . ".png");
+
             auth()->user()->profile()->image = $request->input('username') . '.png';
+
             User::find(Auth::id())->profile()->update([
+
                 'image' => $request->input('username') . '.png'
+
             ]);
         }
 
@@ -136,5 +138,12 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('profile.show', ['username' => $request->input('username')])->with('success', 'Profile updated successfully');
+    }
+
+    public function profileDelete(Request $request)
+    {
+        copy(public_path("Images/Profiles/") . "User-avatar.png", public_path("Images/Profiles/" . auth()->user()->profile->image));
+
+        return redirect()->back()->with('success', 'Profile deleted successfully');
     }
 }

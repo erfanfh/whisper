@@ -20,6 +20,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
     /**
      * The attributes that are mass assignable.
      *
