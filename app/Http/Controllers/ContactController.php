@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -13,7 +14,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts = Contact::where('user_id', Auth::id())->get();
+        return view('contacts.index', ['contacts' => $contacts]);
     }
 
     /**
@@ -73,7 +75,7 @@ class ContactController extends Controller
             'name' => $request['name'],
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'Contact update successfully']);
     }
 
     /**
@@ -87,6 +89,6 @@ class ContactController extends Controller
 
         $contact->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'Contact deleted successfully']);
     }
 }

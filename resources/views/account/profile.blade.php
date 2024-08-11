@@ -26,7 +26,7 @@
                                     <a class="btn btn-outline-light btn-sm btn-block" data-bs-toggle="collapse" href="#collapseExample">
                                         <i class="fa fa-user"></i> Add contact
                                     </a>
-                                    <div class="mt-2 w-25 collapse" id="collapseExample">
+                                    <div class="mt-2 collapse" id="collapseExample">
                                         <div class="card card-body bg-transparent">
                                             <form action="{{ route('contact.add', $user->username) }}" method="post">
                                                 @csrf
@@ -47,7 +47,7 @@
                                     <a class="btn btn-outline-light btn-sm btn-block" data-bs-toggle="collapse" href="#collapseExample">
                                         <i class="fa fa-pen"></i> Edit contact
                                     </a>
-                                    <div class="mt-2 w-25 collapse" id="collapseExample">
+                                    <div class="mt-2 collapse" id="collapseExample">
                                         <div class="card card-body bg-transparent">
                                             <form action="{{ route('contact.edit', $user->username) }}" method="post">
                                                 @csrf
@@ -74,7 +74,7 @@
                                     <a class="btn btn-outline-light btn-sm btn-block" data-bs-toggle="collapse" href="#collapseExample">
                                         <i class="fa fa-pen"></i> Edit profile
                                     </a>
-                                    <div class="mt-2 w-25 collapse" id="collapseExample">
+                                    <div class="mt-2 collapse" id="collapseExample">
                                         <div class="card card-body bg-transparent">
                                             <form action="{{ route('profile.post') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
@@ -108,7 +108,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Bio <span class="small">(Max: 1000 chars)</span></label>
-                                                    <textarea class="form-control" name="bio">{{ old('email') ? old('email') : auth()->user()->profile->bio }}</textarea>
+                                                    <textarea rows="10" class="form-control" name="bio">{{ old('email') ? old('email') : auth()->user()->profile->bio }}</textarea>
                                                     <div class="form-text text-danger">
                                                         @error('bio')
                                                         {{ $message }}

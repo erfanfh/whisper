@@ -38,15 +38,27 @@
                 </ul>
             @endguest
             @auth()
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('profile.show', auth()->user()->username) }}">{{ auth()->user()->name }} ▼</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}">logout</a>
+                <ul class="navbar-nav pe-5">
+                    <li class="nav-item dropdown pe-5">
+                        <button class="border-0 btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ auth()->user()->name }}
+                        </button>
+                        <ul class="border-0  dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" aria-current="page" href="{{ route('profile.show', auth()->user()->username) }}">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" aria-current="page" href="{{ route('contact.index') }}">Contacts</a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}">logout</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             @endauth
+
         </div>
     </div>
 </nav>

@@ -100,7 +100,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $res = $post->delete();
+        if (Gate::denies('delete', $post)) {
+            abort(404);
+        }
+
+        $post->delete();
         return redirect()->route('dashboard')->with('success', 'Whisper has been deleted');
     }
 }
