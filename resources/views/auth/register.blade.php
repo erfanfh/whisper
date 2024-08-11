@@ -18,7 +18,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Username</label>
-                        <input type="text" name="username" value="{{ old('username') }}" class="form-control" placeholder="@">
+                        <div class="input-group flex-nowrap">
+                            <span class="input-group-text">@</span>
+                            <input name="username" type="text" class="form-control" placeholder="Username" value="{{ old('username') }}">
+                        </div>
                         <div class="form-text text-danger">
                             @error('username')
                             {{ $message }}

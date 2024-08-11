@@ -99,7 +99,10 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Username</label>
-                                                    <input type="text" name="username" value="{{ old('username') ? old('username') : auth()->user()->username }}" class="form-control">
+                                                    <div class="input-group flex-nowrap">
+                                                        <span class="input-group-text">https://epicmaze.ir/</span>
+                                                        <input name="username" type="text" class="form-control" placeholder="Username" value="{{ old('username') ? old('username') : auth()->user()->username }}">
+                                                    </div>
                                                     <div class="form-text text-danger">
                                                         @error('username')
                                                         {{ $message }}
