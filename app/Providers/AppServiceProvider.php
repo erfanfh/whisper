@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use App\Policies\ProfilePolicy;
 use App\Models\Post;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Profile::class, ProfilePolicy::class);
         Gate::policy(Post::class, PostPolicy::class);
+        Paginator::useBootstrapFive();
     }
 }

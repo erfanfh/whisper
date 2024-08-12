@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SearchController;
 
 
 Route::get('/', function () {
@@ -29,6 +30,8 @@ Route::resource('posts', PostController::class)
 
 Route::put('profile', [ProfileController::class, 'profilePost'])->name('profile.post')->middleware('auth');
 Route::delete('profile', [ProfileController::class, 'profileDelete' ])->name('profile.delete')->middleware('auth');
+
+Route::post('search',[SearchController::class,'search'])->name('search');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index')->middleware('auth');
 Route::get('/{username}', [ProfileController::class, 'show'])->name('profile.show');
