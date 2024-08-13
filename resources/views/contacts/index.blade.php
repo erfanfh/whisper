@@ -30,9 +30,6 @@
                                         {{ $contact->name }}
                                     </div>
                                 </a>
-                                @if($contact->edited)
-                                    <div class="x-small date-time">Edited</div>
-                                @endif
                             </div>
                         </div>
                     </div>
