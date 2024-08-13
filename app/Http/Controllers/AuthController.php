@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
-    public function register()
+    public function register(): View
     {
         return view('auth.register');
     }
 
-    public function registerPost(Request $request)
+    public function registerPost(Request $request): RedirectResponse
     {
 
         $validatedData = $request->validate([
@@ -39,29 +41,31 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        event(new Registered($user));
+
         return redirect()->route('dashboard');
     }
 
-    public function login()
+    public function login(): View
     {
         return view('auth.login');
     }
 
-    public function loginPost(Request $request, User $user)
+    public function loginPost(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required',
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
 
         $users = User::where('username', $credentials['email'])->get()->all();
-        if(!empty($users)) {
-            if(Hash::check($credentials['password'], $users[0]->password)) {
+        if (!empty($users)) {
+            if (Hash::check($credentials['password'], $users[0]->password)) {
                 Auth::loginUsingId($users[0]->id);
                 $request->session()->regenerate();
                 return redirect()->route('dashboard');
@@ -71,7 +75,7 @@ class AuthController extends Controller
         return redirect()->route('login')->with('error', 'Login details are not valid');
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout($request);
         $request->session()->invalidate();

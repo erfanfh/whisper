@@ -21,3 +21,6 @@ yarn-error.log
 /public/icon
 /public/Images
 /storage/app/Profiles
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
