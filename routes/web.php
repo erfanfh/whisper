@@ -1,7 +1,9 @@
 <?php
 
 
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
@@ -47,6 +49,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/group', [GroupController::class, 'index'])->name('group.index')->middleware('auth');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index')->middleware('auth');
 Route::get('/{username}', [ProfileController::class, 'show'])->name('profile.show');

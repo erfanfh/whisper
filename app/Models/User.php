@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,6 +27,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
+    public function group(): HasMany
+    {
+        return $this->HasMany(Group::class);
     }
     /**
      * The attributes that are mass assignable.
