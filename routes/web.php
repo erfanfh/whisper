@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,8 +28,12 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::resource('posts', PostController::class)
-    ->except('create', 'index')
+    ->except('create', 'index', 'store')
     ->middleware('auth');
+
+Route::post('posts/{group?}', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
+
+Route::resource('groups', GroupController::class);
 
 Route::put('profile', [ProfileController::class, 'profilePost'])->name('profile.post')->middleware('auth');
 Route::delete('profile', [ProfileController::class, 'profileDelete' ])->name('profile.delete')->middleware('auth');

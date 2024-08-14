@@ -14,8 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        Post::all();
-        return view('dashboard', ['posts' => Post::latest()->get()]);
+        $posts = Post::where('group_id', null)->where('receiver_id', null)->latest()->get();
+        return view('dashboard', ['posts' => $posts]);
     }
 
     /**
@@ -29,7 +29,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, ?string $group = null)
     {
         $validated = $request->validate(
             [
@@ -42,10 +42,11 @@ class PostController extends Controller
 
         Post::create([
             'message' => $request->message,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'group_id' => $group
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Whisper created successfully');
+        return redirect()->back()->with('success', 'Whisper created successfully');
     }
 
     /**

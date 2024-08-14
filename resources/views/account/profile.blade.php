@@ -1,6 +1,6 @@
 @include('layouts.header')
-
-<div>
+@include('layouts.sidebar')
+<div class="position-absolute end-0 top-0 w-75">
     <div>
         <div class="background">
             <div class="bio-box pt-5 cover">

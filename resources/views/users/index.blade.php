@@ -13,7 +13,7 @@
 @section('content')
     <div class="container">
         <div class="fs-1 fw-bold">
-            Result
+            Users
         </div>
         @if(session('success'))
             <div class="alert alert-success">

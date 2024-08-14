@@ -10,11 +10,18 @@ class Post extends Model
     use HasFactory;
     protected $fillable = [
         'message',
-        'user_id'
+        'user_id',
+        'receiver_id',
+        'group_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 }

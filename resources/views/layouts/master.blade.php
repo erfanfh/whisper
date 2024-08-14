@@ -1,7 +1,13 @@
 @include('layouts.header')
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
+<div class="d-flex">
+    @auth()
+        @include('layouts.sidebar')
+    @endauth
+    @guest()
+        @include('layouts.navbar')
+    @endguest
+    <div class="row w-75 justify-content-center">
         <div class="form col-12 col-md-10 d-flex">
 
             @yield('content')

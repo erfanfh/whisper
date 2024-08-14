@@ -1,8 +1,44 @@
 @extends('layouts.master')
 @section('content')
-    <div class="container ">
+    <nav class="navbar bg-body-white border-bottom border-dark-subtle position-absolute top-0 end-0 w-75">
+        <div class="container-fluid">
+{{--            <a class="navbar-brand fs-3" href="{{ route('groups.show', ['group' => $group->id]) }}">{{ $group->name }}</a>--}}
+            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#groupInfoModal">
+                {{ $group->name }}
+                <i class="fa fa-user-friends"></i>
+                <i class="fa fa-chevron-right"></i>
+            </button>
+            <div class="modal fade" id="groupInfoModal" tabindex="-1" aria-labelledby="groupInfoModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="groupInfoModalLabel">Users </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="list-group">
+                                @foreach($group->users as $user)
+                                    @if(auth()->user()->contacts->where('belongs_id', $user->id)->first())
+                                        <img src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
+                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action">{{ auth()->user()->contacts->where('belongs_id', $user->id)->first()->name }}</a>
+                                    @else
+                                        <img src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
+                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action">{{ $user->name }}</a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div style="margin-top: 5rem" class="container">
         <div class="form-container">
-            <form action="{{ route('posts.store', ['group' => null]) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('posts.store', ['group' => $group]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <textarea class="form-control mb-3" name="message" placeholder="Say you're in love with me..." rows="3"></textarea>
