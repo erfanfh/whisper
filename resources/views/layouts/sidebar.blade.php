@@ -1,5 +1,5 @@
 <div style="height: 100vh" class="d-flex w-25 overflow-auto flex-column flex-shrink-0 text-white bg-dark">
-    <div class="d-flex px-3 align-items-center justify-content-between">
+    <div class="d-flex px-3 py-1 align-items-center justify-content-between">
         <a href="{{ route('dashboard') }}"
            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <span class="fs-4">Whisper!</span>
@@ -46,7 +46,7 @@
         </div>
     </div>
     <ul class="nav nav-pills flex-column mb-auto">
-        <li class="border-top border-bottom px-3 border-dark-subtle">
+        <li class="border-top border-bottom px-3 border-dark-subtle bg-secondary">
             <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
                 <div class="d-flex w-100 align-items-center justify-content-between">
                     <strong class="mb-1">GLOBAL <i class="fa fa-earth"></i> </strong>
@@ -112,10 +112,6 @@
                     </div>
                 </div>
             </div>
-            {{--            <div class="form-check form-switch mb-3">--}}
-            {{--                <input class="form-check-input" type="checkbox" role="switch" name="publicGroup" id="publicGroup">--}}
-            {{--                <label class="form-check-label" for="publicGroup">Make group public</label>--}}
-            {{--            </div>--}}
             <button type="submit" class="btn btn-secondary">Create</button>
         </form>
     </div>

@@ -142,3 +142,12 @@ a {
     height: 2.5rem;
     width: 2.5rem;
 }
+
+.profile-right-sec {
+    height: 100vh;
+    overflow: auto;
+}
+
+.modal-backdrop.show {
+    z-index: 10;
+}

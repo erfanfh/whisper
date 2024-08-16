@@ -1,15 +1,15 @@
 @extends('layouts.master')
+@section('title', "Whisper! | " . $group->name )
 @section('content')
-    <nav class="navbar bg-body-white border-bottom border-dark-subtle position-absolute top-0 end-0 w-75">
-        <div class="container-fluid">
-{{--            <a class="navbar-brand fs-3" href="{{ route('groups.show', ['group' => $group->id]) }}">{{ $group->name }}</a>--}}
+    <nav style="z-index: 100" class="navbar bg-body-white border-bottom border-dark-subtle position-absolute top-0 end-0 w-75">
+        <div class="container-fluid" style="z-index: 100">
             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#groupInfoModal">
                 {{ $group->name }}
                 <i class="fa fa-user-friends"></i>
                 <i class="fa fa-chevron-right"></i>
             </button>
-            <div class="modal fade" id="groupInfoModal" tabindex="-1" aria-labelledby="groupInfoModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+            <div style="z-index: 10" class="modal fade" id="groupInfoModal" tabindex="-1" aria-labelledby="groupInfoModalLabel" aria-hidden="true">
+                <div style="z-index: 10" class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="groupInfoModalLabel">Users </h1>
@@ -19,16 +19,48 @@
                             <div class="list-group">
                                 @foreach($group->users as $user)
                                     @if(auth()->user()->contacts->where('belongs_id', $user->id)->first())
-                                        <img src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
-                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action">{{ auth()->user()->contacts->where('belongs_id', $user->id)->first()->name }}</a>
+                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1">
+                                            <img width="25" src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
+                                            {{ auth()->user()->contacts->where('belongs_id', $user->id)->first()->name }}
+                                        </a>
                                     @else
-                                        <img src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
-                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action">{{ $user->name }}</a>
+                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1">
+                                            <img width="25" src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
+                                            {{ $user->name }}
+                                        </a>
                                     @endif
                                 @endforeach
                             </div>
                         </div>
+                        @if(!empty(auth()->user()->group->where('id', $group->id)->all()))
+                            <form action="{{ route('groupUser.update', $group) }}" method="post" class="modal-body">
+                                @method('PUT')
+                                @csrf
+                                <select name="user" class="form-select mb-2" required>
+                                    <option selected disabled>Select a user</option>
+                                    @foreach(auth()->user()->contacts as $contact)
+                                        @if(empty($group->users->where('id', $contact->belongs->id)->all()))
+                                            <option value="{{ $contact->belongs->id }}">{{ $contact->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Add user</button>
+                            </form>
+                        @endif
                         <div class="modal-footer">
+                            @if(!empty(auth()->user()->group->where('id', $group->id)->all()))
+                                <form action="{{ route('groups.destroy', $group) }}" method="post" onsubmit="return confirm('Are you sure you want to delete the group?')">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete group</button>
+                                </form>
+                            @else
+                                <form action="{{ route('groups.destroy', $group) }}" method="post" onsubmit="return confirm('Are you sure you want to delete the group?')">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Leave group</button>
+                                </form>
+                            @endif
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -106,3 +138,8 @@
         @endforeach
     </div>
 @endsection
+<script>
+    function confirmSubmit() {
+        return confirm("Are you sure you want to submit the form?");
+    }
+</script>

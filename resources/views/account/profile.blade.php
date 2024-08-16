@@ -1,6 +1,7 @@
-@include('layouts.header')
+@extends('layouts.header')
+@section('title', "Whisper! | " . $user->username)
 @include('layouts.sidebar')
-<div class="position-absolute end-0 top-0 w-75">
+<div class="position-absolute end-0 top-0 w-75 profile-right-sec">
     <div>
         <div class="background">
             <div class="bio-box pt-5 cover">

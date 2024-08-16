@@ -9,7 +9,6 @@
 </head>
 <body>
 @extends('layouts.master')
-
 @section('content')
     <div class="container">
         <div class="fs-1 fw-bold">

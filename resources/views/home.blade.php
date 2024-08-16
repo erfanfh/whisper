@@ -1,10 +1,10 @@
-@extends('layouts.master')
-@section('content')
+@include('layouts.header')
+@include('layouts.navbar')
     <div class="first-sec d-flex">
         <div>
-            <h1>Whisper!</h1>
+            <img width="250" src="{{ asset("Images/Logo/png/logo-no-background.png") }}" alt="logo">
             <p>To use Whipser! you should create an account with your email address. It's FREE to use.</p>
         </div>
         <h5>Whisper! to your friends</h5>
     </div>
-@endsection
+@include('layouts.footer')

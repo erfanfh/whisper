@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('title', 'Contacts')
 @section('content')
     <div class="container">
         <div class="fs-1 fw-bold">

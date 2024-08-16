@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', 'Whisper! | Global')
 @section('content')
     <div class="container ">
         <div class="form-container">

@@ -1,5 +1,5 @@
 @extends('auth.master')
-
+@section('title', 'Login to Whisper!')
 @section('content')
     <div class="card">
         <h5 class="card-header">Login</h5>

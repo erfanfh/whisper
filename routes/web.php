@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +34,12 @@ Route::resource('posts', PostController::class)
 
 Route::post('posts/{group?}', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
 
-Route::resource('groups', GroupController::class);
+Route::resource('groups', GroupController::class)->middleware('auth');
+
+Route::group(['middleware' => 'auth', 'prefix' => 'groupUser'], function () {
+    Route::put('/{group}', [UserGroupController::class, 'updateUser'])->name('groupUser.update');
+    Route::delete('/{group}', [UserGroupController::class, 'updateUser'])->name('groupUser.destroy');
+});
 
 Route::put('profile', [ProfileController::class, 'profilePost'])->name('profile.post')->middleware('auth');
 Route::delete('profile', [ProfileController::class, 'profileDelete' ])->name('profile.delete')->middleware('auth');

@@ -7,7 +7,7 @@
     @guest()
         @include('layouts.navbar')
     @endguest
-    <div class="row w-75 justify-content-center">
+    <div class="row w-75 justify-content-center profile-right-sec">
         <div class="form col-12 col-md-10 d-flex">
 
             @yield('content')
