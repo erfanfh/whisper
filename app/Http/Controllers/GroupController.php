@@ -37,6 +37,7 @@ class GroupController extends Controller
     public function store(StoreGroupRequest $request, User $user, Group $group)
     {
         $user = Auth::user();
+
         $group = Group::create([
             'name' => $request->name,
             'user_id' => $user->id
@@ -50,7 +51,6 @@ class GroupController extends Controller
         }
 
         return redirect()->back();
-
     }
 
     /**
@@ -91,5 +91,24 @@ class GroupController extends Controller
         $group->delete();
 
         return redirect()->route('dashboard');
+    }
+
+    public function leaveGroup(Request $request, Group $group)
+    {
+        auth()->user()->groups()->detach($group->id);
+
+        return redirect()->route('dashboard');
+    }
+
+    public function removeUserGroup(User $user, Group $group)
+    {
+        if ($user->id == auth()->user()->id) {
+            return redirect()->back();
+        }
+
+        $user->groups()->detach($group->id);
+
+        return redirect()->back();
+
     }
 }

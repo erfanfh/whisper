@@ -1,4 +1,4 @@
-<div style="height: 100vh" class="d-flex w-25 overflow-auto flex-column flex-shrink-0 text-white bg-dark">
+<div style="height: 100vh" class="sidebar d-flex w-25 overflow-auto flex-column flex-shrink-0 text-white bg-dark">
     <div class="d-flex px-3 py-1 align-items-center justify-content-between">
         <a href="{{ route('dashboard') }}"
            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -50,11 +50,6 @@
             <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
                 <div class="d-flex w-100 align-items-center justify-content-between">
                     <strong class="mb-1">GLOBAL <i class="fa fa-earth"></i> </strong>
-{{--                    <small>{{ $group->posts->last() ? $group->posts->last()->created_at->format("Y/m/d") : "" }}</small>--}}
-                </div>
-                <div class="col-10 mb-1 small">
-{{--                    <small class="mb-1">{{ $group->posts->last() ? $group->posts->last()->user->name : "" }} </small>--}}
-{{--                    {{ $group->posts->last() ? $group->posts->last()->message : "" }}--}}
                 </div>
             </a>
         </li>

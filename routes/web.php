@@ -35,6 +35,9 @@ Route::resource('posts', PostController::class)
 Route::post('posts/{group?}', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
 
 Route::resource('groups', GroupController::class)->middleware('auth');
+Route::delete('groupsUser/', [GroupController::class, 'leaveGroup'])->name('groups.leave')->middleware('auth');
+Route::delete('RemoveGroupUser/{user}/{group}', [GroupController::class, 'removeUserGroup'])->name('groups.remove')->middleware('auth');
+
 
 Route::group(['middleware' => 'auth', 'prefix' => 'groupUser'], function () {
     Route::put('/{group}', [UserGroupController::class, 'updateUser'])->name('groupUser.update');
