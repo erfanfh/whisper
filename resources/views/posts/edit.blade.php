@@ -11,7 +11,11 @@
                 </div>
                 <div class="edit-buttons">
                     <button type="submit">Edit</button>
-                    <a style="background-color: gray" href="{{ route('dashboard') }}">Back</a>
+                    @if(is_null($post->group))
+                        <a style="background-color: gray" href="{{ route('dashboard') }}">Back</a>
+                    @else
+                        <a style="background-color: gray" href="{{ route('groups.show', $post->group) }}">Back</a>
+                    @endif
                 </div>
             </form>
         </div>

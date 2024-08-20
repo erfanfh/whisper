@@ -21,7 +21,8 @@
                 <div class="d-flex justify-content-between align-items-center mb-10">
                     <div class="d-flex gap-3">
                         <a href="{{ route('profile.show', $contact->belongs->username) }}">
-                            <img alt="Profile" class="post-user-prof rounded-circle" src="{{ asset('Images/Profiles/' . $contact->belongs->profile->image) }}">
+                            <img alt="Profile" class="post-user-prof rounded-circle"
+                                 src="{{ asset('Images/Profiles/' . $contact->belongs->profile->image) }}">
                         </a>
                         <div style="grid-gap: 5px" class="d-flex">
                             <div class="d-flex align-items-center mb-10 sender">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
@@ -18,18 +20,12 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function registerPost(Request $request): RedirectResponse
+    public function registerPost(StoreUserRequest $request): RedirectResponse
     {
 
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'username' => 'required|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        $validated = $request->validated();
 
-        $user = User::create($validatedData);
-
+        $user = User::create($validated);
 
         $profile = $user->profile()->create([
             'user_id' => $user->id,
@@ -51,21 +47,18 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function loginPost(Request $request)
+    public function loginPost(LoginUserRequest $request): RedirectResponse
     {
-        $credentials = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+        $validated = $request->validated();
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($validated)) {
             $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
 
-        $users = User::where('username', $credentials['email'])->get()->all();
+        $users = User::where('username', $validated['email'])->get()->all();
         if (!empty($users)) {
-            if (Hash::check($credentials['password'], $users[0]->password)) {
+            if (Hash::check($validated['password'], $users[0]->password)) {
                 Auth::loginUsingId($users[0]->id);
                 $request->session()->regenerate();
                 return redirect()->route('dashboard');
@@ -78,8 +71,11 @@ class AuthController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout($request);
+
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
 }

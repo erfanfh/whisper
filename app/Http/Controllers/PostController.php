@@ -2,20 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
-        $posts = Post::where('group_id', null)->where('receiver_id', null)->latest()->get();
+        $posts = Post::where('group_id', null)->where('receiver_id', null)
+            ->latest()->get();
+
         return view('dashboard', ['posts' => $posts]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StorePostRequest $request, ?string $group = null): RedirectResponse
+    {
+        Post::create([
+            'message' => $request->message,
+            'user_id' => Auth::id(),
+            'group_id' => $group
+        ]);
+
+        return redirect()->back()->with('success', 'Whisper created successfully');
     }
 
     /**
@@ -24,29 +45,6 @@ class PostController extends Controller
     public function create()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request, ?string $group = null)
-    {
-        $validated = $request->validate(
-            [
-                'message' => 'required|max:10000',
-            ],
-            [
-                'message.required' => "Say something :)"
-            ]
-        );
-
-        Post::create([
-            'message' => $request->message,
-            'user_id' => Auth::id(),
-            'group_id' => $group
-        ]);
-
-        return redirect()->back()->with('success', 'Whisper created successfully');
     }
 
     /**
@@ -60,18 +58,19 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post): Application|Factory|View
     {
         if (Gate::denies('update', $post)) {
             abort(404);
         }
+
         return view('posts.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
         if (Gate::denies('update', $post)) {
             abort(404);
@@ -81,10 +80,6 @@ class PostController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $request->validate([
-            'message' => 'required|max:10000',
-        ]);
-
         $post->update([
             'message' => $request->message,
         ]);
@@ -93,19 +88,29 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->route('dashboard')->with('success', 'Whisper updated successfully');
+        if (is_null($post->group)) {
+            return redirect()->route('dashboard')->with('success', 'Whisper updated successfully');
+        }
+
+        return redirect()->route('groups.show', $post->group)->with('success', 'Whisper updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): RedirectResponse
     {
         if (Gate::denies('delete', $post)) {
             abort(404);
         }
 
         $post->delete();
-        return redirect()->route('dashboard')->with('success', 'Whisper has been deleted');
+
+        if (is_null($post->group)) {
+            return redirect()->route('dashboard')->with('success', 'Whisper has been deleted');
+        }
+
+        return redirect()->route('groups.show', $post->group)->with('success', 'Whisper has been deleted');
+
     }
 }

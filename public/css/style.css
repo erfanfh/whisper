@@ -19,15 +19,10 @@ a {
     font-weight: 100;
 }
 
-.navbar {
-    padding-right: 2rem !important;
-    padding-left: 2rem !important;
-    background-color: #ffffff !important;
-}
-
 .container {
     padding: 20px;
 }
+
 .post-block {
     background-color: #ffffff;
     padding: 15px;
@@ -58,6 +53,10 @@ a {
 .date-time {
     font-size: 0.9em;
     color: #555;
+}
+
+.auth-form {
+    max-width: 90% !important;
 }
 
 .form-container {
@@ -93,8 +92,6 @@ a {
     bottom: 0;
     margin-left: 1rem;
     margin-bottom: 5px;
-    /*right: 0;*/
-    /*top: 0;*/
 }
 
 .form-container a {
@@ -143,11 +140,17 @@ a {
     width: 2.5rem;
 }
 
-.profile-right-sec {
+.modal-backdrop.show {
+    z-index: 10;
+}
+
+.sidebar {
     height: 100vh;
+    position: sticky;
+    top: 0;
     overflow: auto;
 }
 
-.modal-backdrop.show {
-    z-index: 10;
+.main-navbar {
+    display: none !important;
 }

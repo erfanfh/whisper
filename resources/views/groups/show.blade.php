@@ -1,16 +1,17 @@
 @extends('layouts.master')
 @section('title', "Whisper! | " . $group->name )
 @section('content')
-    <nav style="z-index: 100" class="navbar bg-body-white border-bottom border-dark-subtle position-absolute top-0 end-0 w-75">
+    <nav style="z-index: 100" class="navbar bg-white border-bottom border-dark-subtle position-sticky top-0 end-0">
         <div class="container-fluid" style="z-index: 100">
             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#groupInfoModal">
                 {{ $group->name }}
                 <i class="fa fa-user-friends"></i>
                 <i class="fa fa-chevron-right"></i>
             </button>
-            <div style="z-index: 10" class="modal fade" id="groupInfoModal" tabindex="-1" aria-labelledby="groupInfoModalLabel" aria-hidden="true">
-                <div style="z-index: 10" class="modal-dialog">
-                    <div class="modal-content">
+            <div style="z-index: 10" class="modal fade" id="groupInfoModal" tabindex="-1"
+                 aria-labelledby="groupInfoModalLabel" aria-hidden="true">
+                <div style="z-index: 10" class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content group-user-modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="groupInfoModalLabel">Users </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -19,13 +20,19 @@
                             <div class="list-group">
                                 @foreach($group->users as $user)
                                     @if(auth()->user()->contacts->where('belongs_id', $user->id)->first())
-                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1">
-                                            <img width="25" src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
+                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}"
+                                           class="list-group-item list-group-item-action d-flex align-items-center gap-1">
+                                            <img width="25"
+                                                 src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}"
+                                                 alt="profile">
                                             {{ auth()->user()->contacts->where('belongs_id', $user->id)->first()->name }}
                                         </a>
                                     @else
-                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1">
-                                            <img width="25" src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
+                                        <a href="{{ route('profile.show', ['username' => $user->username]) }}"
+                                           class="list-group-item list-group-item-action d-flex align-items-center gap-1">
+                                            <img width="25"
+                                                 src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}"
+                                                 alt="profile">
                                             {{ $user->name }}
                                         </a>
                                     @endif
@@ -49,16 +56,20 @@
                         @endif
                         <div class="modal-footer">
                             @if(!empty(auth()->user()->group->where('id', $group->id)->all()))
-                                <form action="{{ route('groups.destroy', $group) }}" method="post" onsubmit="return confirm('Are you sure you want to delete the group?')">
+                                <form action="{{ route('groups.destroy', $group) }}" method="post"
+                                      onsubmit="return confirm('Are you sure you want to delete the group?')">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete group</button>
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete group
+                                    </button>
                                 </form>
                             @else
-                                <form action="{{ route('groups.destroy', $group) }}" method="post" onsubmit="return confirm('Are you sure you want to delete the group?')">
+                                <form action="{{ route('groups.destroy', $group) }}" method="post"
+                                      onsubmit="return confirm('Are you sure you want to delete the group?')">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Leave group</button>
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Leave group
+                                    </button>
                                 </form>
                             @endif
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -68,12 +79,13 @@
             </div>
         </div>
     </nav>
-    <div style="margin-top: 5rem" class="container">
+    <div class="container">
         <div class="form-container">
             <form action="{{ route('posts.store', ['group' => $group]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <textarea class="form-control mb-3" name="message" placeholder="Say you're in love with me..." rows="3"></textarea>
+                    <textarea class="form-control mb-3" name="message" placeholder="Say you're in love with me..."
+                              rows="3"></textarea>
                 </div>
                 @error('message')
                 <div class="alert alert-secondary">
@@ -93,7 +105,8 @@
                 <div class="d-flex justify-content-between align-items-center mb-10">
                     <div>
                         <a href="{{ route('profile.show', $post->user->username) }}">
-                            <img alt="Profile" class="post-user-prof rounded-circle" src="{{ asset('Images/Profiles/' . $post->user->profile->image) }}">
+                            <img alt="Profile" class="post-user-prof rounded-circle"
+                                 src="{{ asset('Images/Profiles/' . $post->user->profile->image) }}">
                         </a>
                         <div style="grid-gap: 5px" class="d-flex">
                             <div class="d-flex align-items-center mb-10 sender">
@@ -110,7 +123,8 @@
                                         @endif
                                     </div>
                                 </a>
-                                <div style="color: #555" class="x-small date-time">{{ $post->created_at->format('j/m/Y, H:i') }}</div>
+                                <div style="color: #555"
+                                     class="x-small date-time">{{ $post->created_at->format('j/m/Y, H:i') }}</div>
                                 @if($post->edited)
                                     <div class="x-small date-time">Edited</div>
                                 @endif
@@ -138,6 +152,7 @@
         @endforeach
     </div>
 @endsection
+
 <script>
     function confirmSubmit() {
         return confirm("Are you sure you want to submit the form?");

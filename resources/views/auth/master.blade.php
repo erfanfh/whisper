@@ -24,7 +24,7 @@
 <div>
     @include('layouts.navbar')
     <div class="row justify-content-center align-item-center">
-        <div class="form col-12 col-md-10 d-flex mt-5">
+        <div class="form col-12 col-md-10 d-flex m-5 auth-form">
             <div class="col-12 col-md-6">
                 @yield('content')
             </div>

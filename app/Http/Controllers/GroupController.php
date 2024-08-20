@@ -6,9 +6,7 @@ use App\Http\Requests\StoreGroupRequest;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,19 +22,12 @@ class GroupController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGroupRequest $request, User $user, Group $group)
+    public function store(StoreGroupRequest $request, User $user, Group $group): RedirectResponse
     {
         $user = Auth::user();
+
         $group = Group::create([
             'name' => $request->name,
             'user_id' => $user->id
@@ -54,11 +45,19 @@ class GroupController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(Request $request, Group $group, Post $post): View
     {
-        if(empty(auth()->user()->groups->where('id', $group->id)->collect()->all())) {
+        if (empty(auth()->user()->groups->where('id', $group->id)->collect()->all())) {
             abort(404);
         }
 
@@ -86,7 +85,7 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Group $group)
+    public function destroy(Group $group): RedirectResponse
     {
         $group->delete();
 

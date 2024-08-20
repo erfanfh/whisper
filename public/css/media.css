@@ -11,4 +11,18 @@
     .username-box, .bio-box {
         padding: 10px !important;
     }
+
+    .sidebar {
+        height: auto;
+        position: relative;
+        overflow: scroll;
+    }
+
+    .main-navbar {
+        display: flex !important;
+    }
+
+    .group-user-modal-content {
+        max-height: 80% !important;
+    }
 }

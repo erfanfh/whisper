@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search(Request $request): View
+    public function __invoke(Request $request): View
     {
         $users = User::where('username', 'Like', '%' . $request['q'] . '%')->orWhere('name', 'Like', '%' . $request['q'] . '%')->get();
+
         return view('users.index', ['users' => $users]);
     }
 }

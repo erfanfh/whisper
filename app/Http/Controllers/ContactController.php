@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
 use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +17,27 @@ class ContactController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Application|Factory|View
     {
         $contacts = Contact::where('user_id', Auth::id())->get();
+
         return view('contacts.index', ['contacts' => $contacts]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreContactRequest $request): RedirectResponse
+    {
+        $user = User::where('username', collect(explode('/', $request->path()))->first())->firstOrFail();
+
+        Contact::create([
+            'name' => $request['name'],
+            'user_id' => auth()->user()->id,
+            'belongs_id' => $user->id,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -27,29 +49,9 @@ class ContactController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $user = User::where('username', collect(explode('/', $request->path()))->first())->firstOrFail();
-
-        $request->validate([
-            'name' => 'required|max:50',
-        ]);
-
-        Contact::create([
-           'name' => $request['name'],
-           'user_id'=> auth()->user()->id,
-            'belongs_id' => $user->id,
-        ]);
-
-        return redirect()->back();
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(Contact $contact)
+    public function show(Contact $contact): Application|Factory|View
     {
         return view('contact.edit');
     }
@@ -65,7 +67,7 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $username)
+    public function update(Request $request, string $username): RedirectResponse
     {
         $user = User::where('username', $username)->get()->firstOrFail();
 
@@ -81,7 +83,7 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $username)
+    public function destroy(string $username): RedirectResponse
     {
         $user = User::where('username', $username)->get()->firstOrFail();
 

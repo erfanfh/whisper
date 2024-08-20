@@ -6,7 +6,8 @@
             <form action="{{ route('posts.store', ['group' => null]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <textarea class="form-control mb-3" name="message" placeholder="Say you're in love with me..." rows="3"></textarea>
+                    <textarea class="form-control mb-3" name="message" placeholder="Say you're in love with me..."
+                              rows="3"></textarea>
                 </div>
                 @error('message')
                 <div class="alert alert-secondary">
@@ -26,7 +27,8 @@
                 <div class="d-flex justify-content-between align-items-center mb-10">
                     <div>
                         <a href="{{ route('profile.show', $post->user->username) }}">
-                            <img alt="Profile" class="post-user-prof rounded-circle" src="{{ asset('Images/Profiles/' . $post->user->profile->image) }}">
+                            <img alt="Profile" class="post-user-prof rounded-circle"
+                                 src="{{ asset('Images/Profiles/' . $post->user->profile->image) }}">
                         </a>
                         <div style="grid-gap: 5px" class="d-flex">
                             <div class="d-flex align-items-center mb-10 sender">
@@ -43,7 +45,8 @@
                                         @endif
                                     </div>
                                 </a>
-                                <div style="color: #555" class="x-small date-time">{{ $post->created_at->format('j/m/Y, H:i') }}</div>
+                                <div style="color: #555"
+                                     class="x-small date-time">{{ $post->created_at->format('j/m/Y, H:i') }}</div>
                                 @if($post->edited)
                                     <div class="x-small date-time">Edited</div>
                                 @endif
