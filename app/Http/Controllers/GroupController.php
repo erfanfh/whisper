@@ -41,7 +41,6 @@ class GroupController extends Controller
         }
 
         return redirect()->back();
-
     }
 
     /**
@@ -90,5 +89,24 @@ class GroupController extends Controller
         $group->delete();
 
         return redirect()->route('dashboard');
+    }
+
+    public function leaveGroup(Request $request, Group $group)
+    {
+        auth()->user()->groups()->detach($group->id);
+
+        return redirect()->route('dashboard');
+    }
+
+    public function removeUserGroup(User $user, Group $group)
+    {
+        if ($user->id == auth()->user()->id) {
+            return redirect()->back();
+        }
+
+        $user->groups()->detach($group->id);
+
+        return redirect()->back();
+
     }
 }
