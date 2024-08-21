@@ -176,8 +176,8 @@
                 </div>
                 <div class="bio-box">
                     <h5 class="mb-2">Bio</h5>
-                    <div class="rounded shadow-sm bg-light bio-box">
-                        <p class="font-italic mb-0">{{ $user->profile->bio }}</p>
+                    <div style="white-space: pre-line;" class="rounded shadow-sm bg-light bio-box">
+                        {{ $user->profile->bio }}
                     </div>
                 </div>
             </div>
