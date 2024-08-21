@@ -21,7 +21,7 @@
                                 @foreach($group->users as $user)
                                     @if(auth()->user()->contacts->where('belongs_id', $user->id)->first())
                                         <div class="list-item d-flex gap-2">
-                                            <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1 ">
+                                            <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
                                                 <img width="25" src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
                                                 {{ auth()->user()->contacts->where('belongs_id', $user->id)->first()->name }}
                                             </a>
@@ -40,7 +40,7 @@
                                         </div>
                                     @else
                                         <div class="list-item d-flex gap-2">
-                                            <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1 border-radius-2">
+                                            <a href="{{ route('profile.show', ['username' => $user->username]) }}" class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
                                                 <img width="25" src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}" alt="profile">
                                                 {{ $user->name }}
                                             </a>

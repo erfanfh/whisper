@@ -45,12 +45,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Groups
     Route::resource('groups', GroupController::class)->only('destroy', 'store', 'show');
+
     Route::delete('groupsUser/', [GroupController::class, 'leaveGroup'])->name('groups.leave')->middleware('auth');
+
     Route::delete('RemoveGroupUser/{user}/{group}', [GroupController::class, 'removeUserGroup'])->name('groups.remove')->middleware('auth');
 
     Route::group(['prefix' => 'groupUser'], function () {
-        Route::put('/{group}', [UserGroupController::class])->name('groupUser.update');
-        Route::delete('/{group}', [UserGroupController::class])->name('groupUser.destroy');
+        Route::put('/{group}', UserGroupController::class)->name('groupUser.update');
+        Route::delete('/{group}', UserGroupController::class)->name('groupUser.destroy');
     });
 
     // Profile
@@ -59,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('profile', [ProfileController::class, 'profileDelete'])->name('profile.delete');
 
     // Search
-    Route::post('search', [SearchController::class])->name('search');
+    Route::post('search', SearchController::class)->name('search');
 
     // Email
 //    Route::get('/email/verify', function () {

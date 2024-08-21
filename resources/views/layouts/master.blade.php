@@ -109,8 +109,7 @@
 </div>
 
 
-{{--Modals and canvas--}}
-
+{{--Create Group Canvas--}}
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="createGroupOffcanvas" aria-labelledby="createGroupOffcanvasLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="createGroupOffcanvasLabel">Creat new group</h5>
@@ -153,6 +152,7 @@
     </div>
 </div>
 
+{{--Search User Modal--}}
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
