@@ -76,10 +76,6 @@ class PostController extends Controller
             abort(404);
         }
 
-        if ($post->message === $request->get('message')) {
-            return redirect()->route('dashboard');
-        }
-
         $post->update([
             'message' => $request->message,
         ]);
