@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Profile\DeleteProfile;
+use App\Actions\Profile\UpdateProfile;
 use App\Http\Requests\ProfilePostRequest;
 use App\Models\Profile;
 use App\Models\User;
@@ -10,7 +12,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ProfileController extends Controller
@@ -24,7 +25,7 @@ class ProfileController extends Controller
         return view('account.profile', ['user' => $user]);
     }
 
-    public function profilePost(ProfilePostRequest $request, Profile $profile): RedirectResponse
+    public function profilePost(ProfilePostRequest $request, Profile $profile, UpdateProfile $updateProfile): RedirectResponse
     {
         if (Gate::denies('update', $profile)) {
             abort(403);
@@ -32,38 +33,31 @@ class ProfileController extends Controller
 
         if ($request->hasFile('profile')) {
             $extension = $request->file('profile')->getClientOriginalExtension();
-            $request->file('profile')->storeAs("Profiles", auth()->user()->username . "." . $extension);
-            auth()->user()->profile()->update([
-                'image' => Auth::user()->username . "." . $extension,
-            ]);
-            copy(storage_path("app/Profiles/") . auth()->user()->profile->image, public_path("Images/Profiles/" . auth()->user()->profile->image));
-            unlink(storage_path("app/Profiles/") . auth()->user()->profile->image);
+            $updateProfile->storeProfile($request, $extension);
+            $updateProfile->defaultProfile($extension);
+            $updateProfile->copy();
+            $updateProfile->unlink();
         }
 
-        if (auth()->user()->username != $request->input('username')) {
-            rename(public_path('Images/Profiles/') . auth()->user()->username . '.png', public_path('Images/Profiles/') . $request->input('username') . ".png");
-            auth()->user()->profile()->image = $request->input('username') . '.png';
-            User::find(Auth::id())->profile()->update([
-                'image' => $request->input('username') . '.png'
-            ]);
+        if (auth()->user()->username != $request->username) {
+            $updateProfile->rename($request);
+            $updateProfile->updateProfile($request);
         }
 
-        User::find(Auth::id())->update($request->validated());
+        $updateProfile->updateUser($request->validated());
 
-        User::find(Auth::id())->profile()->update([
-            'bio' => $request['bio'],
-        ]);
+        $updateProfile->updateBio($request);
 
-        return redirect()->route('profile.show', ['username' => $request->input('username')])->with('success', 'Profile updated successfully');
+        return redirect()->route('profile.show', ['username' => $request->username])->with('success', 'Profile updated successfully');
     }
 
-    public function profileDelete(Profile $profile): RedirectResponse
+    public function profileDelete(Profile $profile, DeleteProfile $deleteProfile): RedirectResponse
     {
         if (Gate::denies('delete', $profile)) {
             abort(404);
         }
 
-        copy(public_path("Images/Profiles/") . "User-avatar.png", public_path("Images/Profiles/" . auth()->user()->profile->image));
+        $deleteProfile->copy();
 
         return redirect()->back()->with('success', 'Profile deleted successfully');
     }

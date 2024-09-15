@@ -75,6 +75,12 @@
                                 </select>
                                 <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Add user</button>
                             </form>
+                            <form action="{{ route('groupName.update', $group) }}" method="post" class="modal-body">
+                                @method('PUT')
+                                @csrf
+                                <input class="form-control mb-2" type="text" value="{{$group->name}}" name="name">
+                                <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">Change group name</button>
+                            </form>
                         @endif
                         <div class="modal-footer">
                             @if(!empty(auth()->user()->group->where('id', $group->id)->all()))

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class UserGroupController extends Controller
 {
-    public function __invoke(Request $request, Group $group) : RedirectResponse
+    public function __invoke(Request $request, Group $group): RedirectResponse
     {
         if (is_null($request->input('user'))) {
             return redirect()->back();

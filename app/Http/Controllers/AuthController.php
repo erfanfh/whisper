@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Actions\Auth\CreateUser;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
@@ -20,18 +21,13 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function registerPost(StoreUserRequest $request): RedirectResponse
+    public function registerPost(StoreUserRequest $request, CreateUser $createUser): RedirectResponse
     {
-
         $validated = $request->validated();
 
         $user = User::create($validated);
 
-        $profile = $user->profile()->create([
-            'user_id' => $user->id,
-            'image' => $request->username . ".png",
-            'bio' => 'Write something about yourself',
-        ]);
+        $profile = $createUser->handle($request, $user);
 
         copy(public_path("Images/Profiles/") . "User-avatar.png", public_path("Images/Profiles/" . $profile->image));
 

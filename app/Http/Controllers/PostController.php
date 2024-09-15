@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Posts\CreatePost;
+use App\Actions\Posts\UpdatePost;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
@@ -28,32 +30,13 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request, ?string $group = null): RedirectResponse
+    public function store(StorePostRequest $request, CreatePost $createPost, ?string $group = null): RedirectResponse
     {
-        Post::create([
-            'message' => $request->message,
-            'user_id' => Auth::id(),
-            'group_id' => $group
-        ]);
+        $createPost->handle($request, $group);
 
         return redirect()->back()->with('success', 'Whisper created successfully');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Post $post)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -70,15 +53,13 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
+    public function update(UpdatePostRequest $request, Post $post, UpdatePost $updatePost): RedirectResponse
     {
         if (Gate::denies('update', $post)) {
             abort(404);
         }
 
-        $post->update([
-            'message' => $request->message,
-        ]);
+        $updatePost->handle($request, $post);
 
         $post->edited = 1;
 

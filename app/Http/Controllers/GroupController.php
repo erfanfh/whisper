@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Groups\CreateGroup;
+use App\Actions\Groups\UpdateGroupName;
 use App\Http\Requests\StoreGroupRequest;
+use App\Http\Requests\UpdateGroupNameRequest;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\User;
@@ -14,24 +17,13 @@ use Illuminate\Support\Facades\Auth;
 class GroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index(User $user, Group $group)
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGroupRequest $request, User $user, Group $group): RedirectResponse
+    public function store(StoreGroupRequest $request, CreateGroup $createGroup): RedirectResponse
     {
         $user = Auth::user();
 
-        $group = Group::create([
-            'name' => $request->name,
-            'user_id' => $user->id
-        ]);
+        $group = $createGroup->handle($request, $user);
 
         $user->groups()->save($group);
 
@@ -41,14 +33,6 @@ class GroupController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -65,21 +49,6 @@ class GroupController extends Controller
         return view('groups.show', ['group' => $group, 'posts' => $post]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Group $group)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Group $group)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -91,14 +60,14 @@ class GroupController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function leaveGroup(Request $request, Group $group)
+    public function leaveGroup(Request $request, Group $group): RedirectResponse
     {
         auth()->user()->groups()->detach($group->id);
 
         return redirect()->route('dashboard');
     }
 
-    public function removeUserGroup(User $user, Group $group)
+    public function removeUserGroup(User $user, Group $group): RedirectResponse
     {
         if ($user->id == auth()->user()->id) {
             return redirect()->back();
@@ -108,5 +77,12 @@ class GroupController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function updateName(UpdateGroupNameRequest $request, Group $group, UpdateGroupName $updateGroupName): RedirectResponse
+    {
+        $updateGroupName->handle($request, $group);
+
+        return redirect()->back()->with('success', $group->name . ' changed successfully');
     }
 }

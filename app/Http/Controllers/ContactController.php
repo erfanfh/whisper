@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Contacts\CreateContact;
+use App\Actions\Contacts\UpdateContact;
 use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
 use App\Models\User;
@@ -27,25 +29,13 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreContactRequest $request): RedirectResponse
+    public function store(StoreContactRequest $request, CreateContact $createContact): RedirectResponse
     {
         $user = User::where('username', collect(explode('/', $request->path()))->first())->firstOrFail();
 
-        Contact::create([
-            'name' => $request['name'],
-            'user_id' => auth()->user()->id,
-            'belongs_id' => $user->id,
-        ]);
+        $createContact->handle($request, $user);
 
         return redirect()->back();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -57,31 +47,22 @@ class ContactController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contact $contact)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $username): RedirectResponse
+    public function update(Request $request, string $username, UpdateContact $updateContact): RedirectResponse
     {
         $user = User::where('username', $username)->get()->firstOrFail();
 
         $contact = auth()->user()->contacts->where('belongs_id', $user->id)->first();
 
-        $contact->update([
-            'name' => $request['name'],
-        ]);
+        $updateContact->handle($request, $contact);
 
-        return redirect()->back()->with(['success' => 'Contact update successfully']);
+        return redirect()->back()->with(['success' => 'Contacts update successfully']);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
      */
     public function destroy(string $username): RedirectResponse
     {
@@ -91,6 +72,6 @@ class ContactController extends Controller
 
         $contact->delete();
 
-        return redirect()->back()->with(['success' => 'Contact deleted successfully']);
+        return redirect()->back()->with(['success' => 'Contacts deleted successfully']);
     }
 }
