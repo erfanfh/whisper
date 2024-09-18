@@ -28,17 +28,6 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePostRequest $request, CreatePost $createPost, ?string $group = null): RedirectResponse
-    {
-        $createPost->handle($request, $group);
-
-        return redirect()->back()->with('success', 'Whisper created successfully');
-    }
-
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post): Application|Factory|View
