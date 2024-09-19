@@ -78,26 +78,8 @@
                         <li class="px-3 mt-3">
                             <div class="text-secondary fw-bold font-monospace">Conversations</div>
                         </li>
-                        <li class="border-bottom px-3 border-dark-subtle">
-                            <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
-                                <div class="d-flex w-100 align-items-center justify-content-between">
-                                    <strong class="mb-1">GLOBAL <i class="fa fa-earth"></i> </strong>
-                                </div>
-                            </a>
-                        </li>
                         @foreach(auth()->user()->groups as $group)
-                            <li class="border-bottom px-3 border-dark-subtle">
-                                <a href="{{ route('groups.show', ['group' => $group->id]) }}" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-                                    <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <strong class="mb-1">{{ $group->name }}</strong>
-                                        <small>{{ $group->posts->last() ? $group->posts->last()->created_at->format("Y/m/d") : "" }}</small>
-                                    </div>
-                                    <div class="col-10 mb-1 small">
-                                        <small class="mb-1">{{ $group->posts->last() ? $group->posts->last()->user->name . ": " : "" }} </small>
-                                        {{ $group->posts->last() ? $group->posts->last()->message : "" }}
-                                    </div>
-                                </a>
-                            </li>
+                            <livewire:aside-chats :group="$group"/>
                         @endforeach
                     </ul></div>
             </div>
