@@ -1,4 +1,4 @@
-<div>
+<div wire:poll>
     @foreach($posts as $post)
         <div class="d-flex flex-column p-4 my-3 post-sec">
             <div class="d-flex justify-content-between align-items-center mb-10">
