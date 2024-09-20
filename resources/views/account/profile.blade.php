@@ -7,7 +7,7 @@
                 <div class="bio-box pt-5 cover">
                     <div class="media align-items-end">
                         <div class="profile mr-3 d-flex flex-column">
-                            <img src="{{ asset('/Images/Profiles/' . $user->profile->image) }}" alt="Profile Photo"
+                            <img src="{{ asset('Images/Profiles/' . $user->profile->image) }}" alt="Profile Photo"
                                  height="200" width="200" class="prof-img rounded-circle mb-4">
                         </div>
                         <div class="media-body mb-5 text-white">
