@@ -1,6 +1,3 @@
-![Logo](http://epicmaze.ir/public/Images/Logo/png/logo-white.png)
-
-
 # Whisper! - A System Chat
 
 Welcome to **Whisper!**, a lightweight system chat designed to streamline communication on your network. This is just the first version, and we have many exciting features planned for future releases.
@@ -12,7 +9,7 @@ Welcome to **Whisper!**, a lightweight system chat designed to streamline commun
 
 ## Upcoming Updates
 
-- Make groups and private chat.
+- Make private chats.
 - Send other types messages than text.
 - Make status.
 - Like, follow, interaction, ...
@@ -22,7 +19,7 @@ Stay tuned for more features in upcoming updates!
 
 ## Demo
 
-A live version of the application is online and accessible via [epicmaze.ir]() 
+A live version of the application is online and accessible via [whisper.epicmaze.ir]() 
 
 You can sign up and join the community and interact with other users
 
