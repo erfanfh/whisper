@@ -19,3 +19,39 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+<IfModule mod_headers.c>
+    # Force no caching for dynamic content (PHP, HTML, etc.)
+    <FilesMatch "\.(html|php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # Set caching for static content (CSS, JS, images)
+    <FilesMatch "\.(css|js|jpg|jpeg|png|gif|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Disable ETag Headers for cache validation
+    Header unset ETag
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # No caching for dynamic content
+    ExpiresByType text/html "access plus 0 seconds"
+    ExpiresByType application/json "access plus 0 seconds"
+
+    # Cache static content (images, CSS, JS) for a long time
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
+
+# Disable ETags
+FileETag None

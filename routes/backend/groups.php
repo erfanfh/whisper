@@ -7,7 +7,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Groups
     Route::resource('groups', GroupController::class)->only('destroy', 'store', 'show');
 
-    Route::delete('groupsUser/', [GroupController::class, 'leaveGroup'])->name('groups.leave')->middleware('auth');
+    Route::delete('groupsUser/{group}', [GroupController::class, 'leaveGroup'])->name('groups.leave')->middleware('auth');
 
     Route::delete('RemoveGroupUser/{user}/{group}', [GroupController::class, 'removeUserGroup'])->name('groups.remove')->middleware('auth');
 
