@@ -45,7 +45,7 @@
                             <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionUser">
                                 <div class="accordion-body">
                                     <ul class="list-group mt-2">
-                                        <li class="list-group-item list-group-item-action bg-transparent border-0">
+                                        <li class="list-group-item list-group-item-action bg-transparent border-0 d-none d-md-block">
                                             <button type="button" class="btn text-dark p-0" data-bs-toggle="modal" data-bs-target="#searchModal">
                                                 Search user
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -135,25 +135,6 @@
 </div>
 
 {{--Search User Modal--}}
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="searchModallLabel">Search user</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="d-flex" role="search" action="{{ route('search') }} " method="POST">
-                    @csrf
-                    <input class="form-control me-2" type="search" placeholder="Username" aria-label="Search" name="q">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<livewire:layouts.search-users/>
 
 @include('layouts.footer')

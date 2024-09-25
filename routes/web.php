@@ -16,8 +16,6 @@ require __DIR__ . '/backend/groups.php';
 
 require __DIR__ . '/backend/profile.php';
 
-require __DIR__ . '/backend/search.php';
-
 require __DIR__ . '/backend/email.php';
 
 require __DIR__ . '/backend/contacts.php';
