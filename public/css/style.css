@@ -154,3 +154,7 @@ a {
 .main-navbar {
     display: none !important;
 }
+
+.inputWithError:focus {
+    border: 1px solid #ff253a !important;
+}
