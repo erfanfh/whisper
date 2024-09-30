@@ -64,6 +64,11 @@ class GroupController extends Controller
     {
         auth()->user()->groups()->detach($group->id);
 
+        Post::create([
+            'message' => auth()->user()->name . ' left the group',
+            'group_id' => $group->id,
+        ]);
+
         return redirect()->route('dashboard');
     }
 
@@ -75,6 +80,11 @@ class GroupController extends Controller
 
         $user->groups()->detach($group->id);
 
+        Post::create([
+            'message' => auth()->user()->name . ' removed ' . $user->name,
+            'group_id' => $group->id,
+        ]);
+
         return redirect()->back();
 
     }
@@ -82,6 +92,11 @@ class GroupController extends Controller
     public function updateName(UpdateGroupNameRequest $request, Group $group, UpdateGroupName $updateGroupName): RedirectResponse
     {
         $updateGroupName->handle($request, $group);
+
+        Post::create([
+            'message' => auth()->user()->name . ' changed the group name to ' . '\'' . $group->name . '\'',
+            'group_id' => $group->id,
+        ]);
 
         return redirect()->back()->with('success', $group->name . ' changed successfully');
     }

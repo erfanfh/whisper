@@ -5,7 +5,12 @@
             <small>{{ $group->posts->last() ? $group->posts->last()->created_at->format("Y/m/d") : "" }}</small>
         </div>
         <div class="col-10 mb-1 small">
-            <small class="mb-1">{{ $group->posts->last() ? Str::limit($group->posts->last()->user->name, 10) . ": " : "" }} </small>
+            @if($group->posts->last())
+                @if($group->posts->last()->user_id != null) {
+                    <small class="mb-1">{{ $group->posts->last() ? Str::limit($group->posts->last()->user->name, 10) . ": " : "" }} </small>
+                }
+                @endif
+            @endif
             {{ $group->posts->last() ? Str::limit($group->posts->last()->message, 30) : "" }}
         </div>
     </a>
