@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use http\Env\Response;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -26,6 +27,12 @@ class PostWhisper extends Component
     public function post(): void
     {
         $this->validate();
+
+        if(empty($this->group->users->where('id', auth()->id())->all())) {
+            abort(403);
+        }
+
+        $this->group->users->where('id', Auth::id())->firstOrFail();
 
         Post::create([
             'message' => $this->message,

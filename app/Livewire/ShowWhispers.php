@@ -17,6 +17,10 @@ class ShowWhispers extends Component
 
     public function render(): Application|Factory|View
     {
+        if(empty($this->group->users->where('id', auth()->id())->all())) {
+            $this->redirect('/');
+        }
+
         $posts = $this->group->posts->reverse();
 
         return view('livewire.show-whispers', compact('posts'));
