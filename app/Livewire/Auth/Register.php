@@ -2,13 +2,11 @@
 
 namespace App\Livewire\Auth;
 
-use App\Actions\Auth\CreateUser;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -18,7 +16,7 @@ class Register extends Component
     #[Validate(['required', 'max:255'])]
     public $name;
 
-    #[Validate(['required', 'min:5','max:255', 'unique:users'])]
+    #[Validate(['required', 'min:5', 'max:255', 'unique:users'])]
     public $username;
 
     #[Validate(['required', 'email', 'max:255', 'unique:users'])]
@@ -29,9 +27,9 @@ class Register extends Component
     public $password_confirmation;
 
 
-    public function registerUser(): RedirectResponse
+    public function registerUser()
     {
-        $validated= $this->validate();
+        $validated = $this->validate();
 
         $user = User::create($validated);
 
