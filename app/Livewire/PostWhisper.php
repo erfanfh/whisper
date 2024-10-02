@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
 
 class PostWhisper extends Component
@@ -35,7 +36,7 @@ class PostWhisper extends Component
         $this->group->users->where('id', Auth::id())->firstOrFail();
 
         Post::create([
-            'message' => $this->message,
+            'message' => Crypt::encrypt($this->message),
             'user_id' => Auth::id(),
             'group_id' => $this->group->id,
         ]);

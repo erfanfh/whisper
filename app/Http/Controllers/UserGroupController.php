@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\User;
+use Crypt;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class UserGroupController extends Controller
         $user->groups()->save($group);
 
         Post::create([
-            'message' => auth()->user()->name . ' added ' . $user->name,
+            'message' => Crypt::encrypt(auth()->user()->name . ' added ' . $user->name),
             'group_id' => $group->id,
         ]);
 

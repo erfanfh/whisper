@@ -52,13 +52,13 @@
                         @endif
                     </div>
                     <div class="mt-10">
-                        {{ $post->message }}
+                        {{ Crypt::decrypt($post->message) }}
                     </div>
                 </div>
             </div>
         @else
             <div class="d-flex align-items-center justify-content-center">
-                <span class="badge text-bg-secondary my-3">{{ $post->message }}</span>
+                <span class="badge text-bg-secondary my-3">{{ Crypt::decrypt($post->message) }}</span>
             </div>
         @endif
     @endforeach

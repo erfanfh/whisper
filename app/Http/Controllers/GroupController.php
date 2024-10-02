@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateGroupNameRequest;
 use App\Models\Group;
 use App\Models\Post;
 use App\Models\User;
+use Crypt;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,7 +66,7 @@ class GroupController extends Controller
         auth()->user()->groups()->detach($group->id);
 
         Post::create([
-            'message' => auth()->user()->name . ' left the group',
+            'message' => Crypt::encrypt(auth()->user()->name . ' left the group'),
             'group_id' => $group->id,
         ]);
 
@@ -81,7 +82,7 @@ class GroupController extends Controller
         $user->groups()->detach($group->id);
 
         Post::create([
-            'message' => auth()->user()->name . ' removed ' . $user->name,
+            'message' => Crypt::encrypt(auth()->user()->name . ' removed ' . $user->name),
             'group_id' => $group->id,
         ]);
 
@@ -94,7 +95,7 @@ class GroupController extends Controller
         $updateGroupName->handle($request, $group);
 
         Post::create([
-            'message' => auth()->user()->name . ' changed the group name to ' . '\'' . $group->name . '\'',
+            'message' => Crypt::encrypt(auth()->user()->name . ' changed the group name to ' . '\'' . $group->name . '\''),
             'group_id' => $group->id,
         ]);
 
