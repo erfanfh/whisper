@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Whisper! | Edit')
+@section('title', 'Edit message')
 @section('content')
     <div class="container">
         <div class="form-container">

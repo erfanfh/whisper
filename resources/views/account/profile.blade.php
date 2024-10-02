@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', "Whisper! | " . $user->username)
+@section('title', $user->username)
 @section('content')
     <div>
         <div>

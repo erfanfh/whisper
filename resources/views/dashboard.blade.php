@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Whisper! | Global')
+@section('title', 'Whisper!')
 @section('content')
     <div class="container ">
         @if(session('success'))
