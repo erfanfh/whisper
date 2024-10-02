@@ -3,6 +3,7 @@
 namespace App\Actions\Posts;
 
 use App\Actions\Action;
+use Crypt;
 
 class UpdatePost extends Action
 {
@@ -12,7 +13,7 @@ class UpdatePost extends Action
     public function handle($request, $post): void
     {
         $post->update([
-            'message' => $request->message,
+            'message' => Crypt::encrypt($request->message),
         ]);
     }
 }

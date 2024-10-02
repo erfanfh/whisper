@@ -10,7 +10,7 @@
                     <small class="mb-1">{{ $group->posts->last() ? Str::limit($group->posts->last()->user->name, 10) . ": " : "" }} </small>
                 @endif
             @endif
-            {{ $group->posts->last() ? Str::limit($group->posts->last()->message, 30) : "" }}
+            {{ $group->posts->last() ? Str::limit(Crypt::decrypt($group->posts->last()->message), 30) : "" }}
         </div>
     </a>
 </li>

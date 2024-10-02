@@ -7,7 +7,7 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <textarea name="message" class="mb-4 form-control" rows="5">{{ $post->message }}</textarea>
+                    <textarea name="message" class="mb-4 form-control" rows="5">{{ Crypt::decrypt($post->message) }}</textarea>
                 </div>
                 <div class="edit-buttons">
                     <button type="submit">Edit</button>

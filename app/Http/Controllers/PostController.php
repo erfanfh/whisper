@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Posts\CreatePost;
 use App\Actions\Posts\UpdatePost;
-use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -55,10 +52,10 @@ class PostController extends Controller
         $post->save();
 
         if (is_null($post->group)) {
-            return redirect()->route('dashboard')->with('success', 'Whisper updated successfully');
+            return redirect()->route('dashboard');
         }
 
-        return redirect()->route('groups.show', $post->group)->with('success', 'Whisper updated successfully');
+        return redirect()->route('groups.show', $post->group);
     }
 
     /**
@@ -73,10 +70,10 @@ class PostController extends Controller
         $post->delete();
 
         if (is_null($post->group)) {
-            return redirect()->route('dashboard')->with('success', 'Whisper has been deleted');
+            return redirect()->route('dashboard');
         }
 
-        return redirect()->route('groups.show', $post->group)->with('success', 'Whisper has been deleted');
+        return redirect()->route('groups.show', $post->group);
 
     }
 }
