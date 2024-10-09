@@ -1,6 +1,6 @@
 # Whisper! - A System Chat
 
-Welcome to **Whisper!**, a lightweight system chat designed to streamline communication on your network. This is just the first version, and we have many exciting features planned for future releases.
+Welcome to **Whisper!**, a lightweight system chat designed to streamline communication on your network. We have many exciting features planned for future releases.
 
 ## Features
 
@@ -70,7 +70,7 @@ Ensure you have the following installed on your system:
    ```bash
    php artisan migrate
    ```
-6. **Run the database migrations::**
+6. **Run the server::**
 
    ```bash
    php artisan serve
