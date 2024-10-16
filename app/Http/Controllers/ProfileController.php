@@ -61,4 +61,16 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'Profile deleted successfully');
     }
+
+    public function follow(User $user)
+    {
+        auth()->user()->followings()->attach($user->id);
+        return redirect()->back();
+    }
+
+    public function unfollow(User $user)
+    {
+        auth()->user()->followings()->detach($user->id);
+        return redirect()->back();
+    }
 }

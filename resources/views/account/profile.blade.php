@@ -23,6 +23,62 @@
                                 <span class="fw-lighter">{{ $user->created_at->format('M Y') }}</span>
                             </p>
                             @auth()
+                                @if(auth()->user()->followings()->first())
+                                    @if(empty(auth()->user()->followings()->firstOrFail()->pivot->where('follower_id', $user->id)->where('following_id', auth()->user()->id)->get()->all()))
+                                        @if(!(auth()->user()->username == $user->username))
+                                            <form class="mb-3" method="post" action="{{ route('follow.user', $user) }}">
+                                                @csrf
+                                                @method('POST')
+                                                <button class="btn btn-outline-light btn-sm btn-block" type="submit" name="follow">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-person-fill-add"
+                                                         viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                        <path
+                                                            d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                                    </svg> Follow
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @else
+                                        @if(!(auth()->user()->username == $user->username))
+                                            <form class="mb-3" method="post" action="{{ route('unfollow.user', $user) }}">
+                                                @csrf
+                                                @method('POST')
+                                                <button class="btn btn-outline-light btn-sm btn-block" type="submit" name="unfollow">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-person-fill-dash"
+                                                         viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                        <path
+                                                            d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                                    </svg>
+                                                    Unfollow</button>
+                                            </form>
+
+                                        @endif
+                                    @endif
+                                @else
+                                    @if(!(auth()->user()->username == $user->username))
+                                        <form class="mb-3" method="post" action="{{ route('follow.user', $user) }}">
+                                            @csrf
+                                            @method('POST')
+                                            <button class="btn btn-outline-light btn-sm btn-block" type="submit" name="follow">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-person-fill-add"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                    <path
+                                                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+                                                </svg> Follow
+                                            </button>
+                                        </form>
+
+                                    @endif
+                                @endif
                                 @if(empty(auth()->user()->contacts->where('belongs_id', $user->id)->first()->name))
                                     @if(!(auth()->user()->username == $user->username))
                                         <a class="btn btn-outline-light btn-sm btn-block" data-bs-toggle="collapse"
@@ -161,6 +217,12 @@
                                 @if(session('success'))
                                     <div class="mt-3 alert alert-success">{{session('success')}}</div>
                                 @endif
+                                <div class="mt-3 d-flex gap-3">
+                                    <span class="fs-5 fw-light">Followers: <span
+                                            class="fw-bold">{{ $user->followers ? $user->followers->count() : 0 }}</span></span>
+                                    <span class="fs-5 fw-light">Followings: <span
+                                            class="fw-bold">{{ $user->followings ? $user->followings->count() : 0 }}</span></span>
+                                </div>
                             @endauth
                         </div>
                     </div>

@@ -38,6 +38,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->HasMany(Group::class);
     }
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_user', 'follower_id', 'following_id');
+    }
+    public function followings(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_user', 'following_id', 'follower_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
