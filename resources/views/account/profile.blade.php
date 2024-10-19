@@ -270,9 +270,10 @@
                             <div class="list-item d-flex gap-2">
                                 <a href="{{ route('profile.show', ['username' => $follower->username]) }}"
                                    class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
-                                    <img width="25"
+                                    <img width="32" height="32"
                                          src="{{ asset('Images/Profiles' . "/" . $follower->profile->image) }}"
-                                         alt="profile">
+                                         alt="profile"
+                                        class="rounded-circle">
                                     {{ $follower->name }}
                                 </a>
                             </div>
@@ -297,9 +298,10 @@
                             <div class="list-item d-flex gap-2">
                                 <a href="{{ route('profile.show', ['username' => $following->username]) }}"
                                    class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
-                                    <img width="25"
+                                    <img width="32" height="32"
                                          src="{{ asset('Images/Profiles' . "/" . $following->profile->image) }}"
-                                         alt="profile">
+                                         alt="profile"
+                                        class="rounded-circle">
                                     {{ $following->name }}
                                 </a>
                             </div>

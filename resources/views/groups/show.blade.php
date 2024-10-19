@@ -23,8 +23,9 @@
                                         <div class="list-item d-flex gap-2">
                                             <a href="{{ route('profile.show', ['username' => $user->username]) }}"
                                                class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
-                                                <img width="25"
+                                                <img width="32" height="32"
                                                      src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}"
+                                                     class="rounded-circle"
                                                      alt="profile">
                                                 {{ auth()->user()->contacts->where('belongs_id', $user->id)->first()->name }}
                                             </a>
@@ -50,8 +51,9 @@
                                         <div class="list-item d-flex gap-2">
                                             <a href="{{ route('profile.show', ['username' => $user->username]) }}"
                                                class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
-                                                <img width="25"
+                                                <img width="32" height="32"
                                                      src="{{ asset('Images/Profiles' . "/" . $user->profile->image) }}"
+                                                     class="rounded-circle"
                                                      alt="profile">
                                                 {{ $user->name }}
                                             </a>
