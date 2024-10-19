@@ -258,7 +258,7 @@
     </div>
     {{--    Followers Modal--}}
     <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="followersModalLabel">{{ $user->name }}'s followers</h1>
@@ -285,7 +285,7 @@
 
     {{--    Followings Modal--}}
     <div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="followingsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="followingsModalLabel">{{ $user->name }}'s followings</h1>
