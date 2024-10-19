@@ -29,7 +29,8 @@
                                             <form class="mb-3" method="post" action="{{ route('follow.user', $user) }}">
                                                 @csrf
                                                 @method('POST')
-                                                <button class="btn btn-outline-light btn-sm btn-block" type="submit" name="follow">
+                                                <button class="btn btn-outline-light btn-sm btn-block" type="submit"
+                                                        name="follow">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                          fill="currentColor" class="bi bi-person-fill-add"
                                                          viewBox="0 0 16 16">
@@ -37,16 +38,19 @@
                                                             d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                                         <path
                                                             d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
-                                                    </svg> Follow
+                                                    </svg>
+                                                    Follow
                                                 </button>
                                             </form>
                                         @endif
                                     @else
                                         @if(!(auth()->user()->username == $user->username))
-                                            <form class="mb-3" method="post" action="{{ route('unfollow.user', $user) }}">
+                                            <form class="mb-3" method="post"
+                                                  action="{{ route('unfollow.user', $user) }}">
                                                 @csrf
                                                 @method('POST')
-                                                <button class="btn btn-outline-light btn-sm btn-block" type="submit" name="unfollow">
+                                                <button class="btn btn-outline-light btn-sm btn-block" type="submit"
+                                                        name="unfollow">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                          fill="currentColor" class="bi bi-person-fill-dash"
                                                          viewBox="0 0 16 16">
@@ -55,7 +59,8 @@
                                                         <path
                                                             d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
                                                     </svg>
-                                                    Unfollow</button>
+                                                    Unfollow
+                                                </button>
                                             </form>
 
                                         @endif
@@ -65,7 +70,8 @@
                                         <form class="mb-3" method="post" action="{{ route('follow.user', $user) }}">
                                             @csrf
                                             @method('POST')
-                                            <button class="btn btn-outline-light btn-sm btn-block" type="submit" name="follow">
+                                            <button class="btn btn-outline-light btn-sm btn-block" type="submit"
+                                                    name="follow">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                      fill="currentColor" class="bi bi-person-fill-add"
                                                      viewBox="0 0 16 16">
@@ -73,7 +79,8 @@
                                                         d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                                     <path
                                                         d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
-                                                </svg> Follow
+                                                </svg>
+                                                Follow
                                             </button>
                                         </form>
 
@@ -218,10 +225,14 @@
                                     <div class="mt-3 alert alert-success">{{session('success')}}</div>
                                 @endif
                                 <div class="mt-3 d-flex gap-3">
-                                    <span class="fs-5 fw-light">Followers: <span
-                                            class="fw-bold">{{ $user->followers ? $user->followers->count() : 0 }}</span></span>
-                                    <span class="fs-5 fw-light">Followings: <span
-                                            class="fw-bold">{{ $user->followings ? $user->followings->count() : 0 }}</span></span>
+                                    <button type="button" class="btn text-light" data-bs-toggle="modal"
+                                            data-bs-target="#followersModal">
+                                        Followers: {{ $user->followers ? $user->followers->count() : 0 }}
+                                    </button>
+                                    <button type="button" class="btn text-light" data-bs-toggle="modal"
+                                            data-bs-target="#followingsModal">
+                                        Following: {{ $user->followings ? $user->followings->count() : 0 }}
+                                    </button>
                                 </div>
                             @endauth
                         </div>
@@ -240,6 +251,59 @@
                     <h5 class="mb-2">Bio</h5>
                     <div style="white-space: pre-line;" class="rounded shadow-sm bg-light bio-box">
                         {{ $user->profile->bio }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--    Followers Modal--}}
+    <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="followersModalLabel">{{ $user->name }}'s followers</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group gap-2">
+                        @foreach($user->followers as $follower)
+                            <div class="list-item d-flex gap-2">
+                                <a href="{{ route('profile.show', ['username' => $follower->username]) }}"
+                                   class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
+                                    <img width="25"
+                                         src="{{ asset('Images/Profiles' . "/" . $follower->profile->image) }}"
+                                         alt="profile">
+                                    {{ $follower->name }}
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--    Followings Modal--}}
+    <div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="followingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="followingsModalLabel">{{ $user->name }}'s followings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group gap-2">
+                        @foreach($user->followings as $following)
+                            <div class="list-item d-flex gap-2">
+                                <a href="{{ route('profile.show', ['username' => $following->username]) }}"
+                                   class="list-group-item list-group-item-action d-flex align-items-center gap-1 rounded">
+                                    <img width="25"
+                                         src="{{ asset('Images/Profiles' . "/" . $following->profile->image) }}"
+                                         alt="profile">
+                                    {{ $following->name }}
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
