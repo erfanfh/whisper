@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserGroupController;
+use App\Http\Middleware\UserMustBeVerified;
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', UserMustBeVerified::class]], function () {
     // Groups
     Route::resource('groups', GroupController::class)->only('destroy', 'store', 'show');
 

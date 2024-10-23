@@ -48,6 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(User::class, 'user_user', 'following_id', 'follower_id');
     }
 
+    public function verifications(): HasMany
+    {
+        return $this->hasMany(Verification::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -58,6 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**

@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Auth;
 
+use App\Mail\SendVerificationCode;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Mail;
 
 class Register extends Component
 {
@@ -43,9 +44,16 @@ class Register extends Component
 
         Auth::login($user);
 
-        event(new Registered($user));
+        $code = rand(100000, 999999);
 
-        return redirect()->route('dashboard');
+        auth()->user()->verifications()->create([
+            'code' => $code,
+            'expired_at' => now()->addHours(2),
+        ]);
+
+        Mail::to($this->email)->send(new SendVerificationCode($code));
+
+        return redirect()->route('verify');
     }
 
     public function render(): Factory|Application|View
