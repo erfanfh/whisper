@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => [UserMustBeUnverified::class]], function () {
         Route::get('/verify', [AuthController::class, 'verify'])->name('verify');
         Route::post('/verify', [AuthController::class, 'verifyPost'])->name('verify.post');
-        Route::post('/resend-verification', [AuthController::class, 'resendVerify'])->name('verify.resend');
+        Route::post('/resend-verification', [AuthController::class, 'changeEmail'])->name('verify.change.email');
+        Route::get('/resend-verification', [AuthController::class, 'resendVerification'])->name('verify.resend');
     });
 });

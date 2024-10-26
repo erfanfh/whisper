@@ -23,7 +23,7 @@ class Register extends Component
     #[Validate(['required', 'email', 'max:255', 'unique:users'])]
     public $email;
 
-    #[Validate(['required', 'min:6', 'confirmed'])]
+    #[Validate(['required', 'min:6', 'max:255', 'confirmed'])]
     public $password;
     public $password_confirmation;
 

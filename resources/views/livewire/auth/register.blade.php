@@ -30,7 +30,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Password</label>
-        <input type="password" class="form-control @error('password') inputWithError border border-danger @enderror"" wire:model="password">
+        <input type="password" class="form-control @error('password') inputWithError border border-danger @enderror" wire:model.live="password">
         <div class="form-text text-danger">
             @error('password')
             {{ $message }}
@@ -39,7 +39,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" wire:model="password_confirmation">
+        <input type="password" class="form-control" wire:model.live="password_confirmation">
         <div class="form-text text-danger">
             @error('password_confirmation')
             {{ $message }}

@@ -88,7 +88,7 @@ class AuthController extends Controller
         }
     }
 
-    public function resendVerify(Request $request)
+    public function changeEmail(Request $request)
     {
         if (auth()->user()->email == $request->email) {
             return redirect()->route('verify');
@@ -116,5 +116,23 @@ class AuthController extends Controller
         Mail::to(auth()->user()->email)->send(new SendVerificationCode($code));
 
         return redirect()->route('verify');
+    }
+
+    public function resendVerification()
+    {
+        if (auth()->user()->verifications->last()->created_at->addMinutes(2) > now()) {
+            return redirect()->route('verify')->with('error', 'Please wait more ...');
+        }
+
+        $code = rand(100000, 999999);
+
+        auth()->user()->verifications()->create([
+            'code' => $code,
+            'expired_at' => now()->addHours(2),
+        ]);
+
+        Mail::to(auth()->user()->email)->send(new SendVerificationCode($code));
+
+        return redirect()->route('verify')->with('success', 'Verification code is sent to your email');
     }
 }
