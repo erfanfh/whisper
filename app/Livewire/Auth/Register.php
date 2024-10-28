@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -28,7 +29,15 @@ class Register extends Component
     public $password_confirmation;
 
 
-    public function registerUser()
+    public function updatedPasswordConfirmation(): void
+    {
+        $this->validateOnly('password');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function registerUser(): RedirectResponse
     {
         $validated = $this->validate();
 
